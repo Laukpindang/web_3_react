@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import TaskInput from '../../components/Input';
 import Lists from '../../components/Lists';
 
@@ -9,6 +9,14 @@ function TodoList() {
     { id: 2, name: 'List 2' },
     { id: 3, name: 'List 3' },
   ]);
+
+  const deleteItem = useCallback((id) => {
+    setLists((prev) => {
+      const filtered = prev.filter((val) => val.id !== id);
+      return filtered;
+    });
+  }, []);
+
   return (
     <div
       style={{
@@ -48,6 +56,7 @@ function TodoList() {
             setEditedId(id);
           }}
           lists={lists}
+          onDelete={deleteItem}
         />
       </div>
     </div>

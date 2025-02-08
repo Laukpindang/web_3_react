@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styles from './index.module.css';
-function Lists({ lists, onEdit }) {
+
+function Lists({ lists, onEdit, onDelete }) {
   return (
     <div
       style={{
@@ -10,7 +11,12 @@ function Lists({ lists, onEdit }) {
     >
       {lists.map((list) => {
         return (
-          <ListItem onEdit={onEdit} id={list.id} key={list.id}>
+          <ListItem
+            onEdit={onEdit}
+            id={list.id}
+            key={list.id}
+            onDelete={onDelete}
+          >
             {list.name}
           </ListItem>
         );
@@ -22,9 +28,10 @@ function Lists({ lists, onEdit }) {
 Lists.propTypes = {
   lists: PropTypes.array.isRequired,
   onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
-function ListItem({ children, onEdit, id }) {
+function ListItem({ children, onEdit, id, onDelete }) {
   return (
     <div className={styles.listItem}>
       <p>{children}</p>
@@ -36,6 +43,14 @@ function ListItem({ children, onEdit, id }) {
           className='button'
         >
           Edit
+        </button>
+        <button
+          onClick={() => {
+            onDelete(id);
+          }}
+          className='button-danger'
+        >
+          Delete
         </button>
       </div>
     </div>
